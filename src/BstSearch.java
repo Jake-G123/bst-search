@@ -1,3 +1,7 @@
+
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BstSearch {
     /**
      * Returns whether a binary search tree contains a given value.
@@ -17,6 +21,18 @@ public class BstSearch {
      * @throws NullPointerException if target is null
      */
     public static <T extends Comparable<T>> boolean contains(BinaryTreeNode<T> root, T target) {
+        if (target == null) throw new NullPointerException("Invalid target value.");
+        if (root == null) return false;
+        Queue<BinaryTreeNode<T>> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            BinaryTreeNode<T> current = queue.poll();
+            if (current == null) continue;
+            if (current.data.compareTo(target) == 0) return true;
+            queue.add(current.left);
+            queue.add(current.right);
+        }
         return false;
     }
 }
